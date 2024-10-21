@@ -1,0 +1,50 @@
+body {
+    background-color: rgb(67, 67, 246);
+}
+
+.container {
+    margin: 20px;
+}
+
+.margin {
+    margin-bottom: 15px;
+}
+
+.header, .info {
+    
+    background-color: white;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    cursor: default;
+  
+}
+
+.header.open {
+    border-radius: 10px 10px 0 0; 
+}
+
+.info {
+   
+    border-radius: 0 0 10px 10px;
+   
+}
+
+.text-flex {
+    flex: 1;
+}
+
+.display{
+display:none;
+
+}
+
+.plus::after{
+ content: "+";
+
+}
+.minus::after{
+    content: "-";
+}

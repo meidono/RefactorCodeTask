@@ -1,0 +1,32 @@
+.my-table {
+   
+    border: 1px solid black;
+}
+.my-table td, .my-table th {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+form {
+    width: 450px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+label {
+    flex: 2;
+}
+
+input {
+    flex: 2;
+    
+   }
+
+.center{
+    text-align: center;
+}
