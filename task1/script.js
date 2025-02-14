@@ -9,7 +9,14 @@ const DEFAULT_SELECT_SIZE = 3;
 const CITIES = ["Житомир", "Київ", "Львів"];
 const INTERESTS = ["Футбол", "Шахи", "Малювання", "Музика"];
 
+// Функція для створення таблиці
 function generateTable(rows, col) {
+    let table = createTable(rows, col);
+    document.body.appendChild(table);
+}
+
+// Функція для створення таблиці
+function createTable(rows, col) {
     let table = document.createElement("table");
     table.classList.add("my-table");
 
@@ -17,55 +24,49 @@ function generateTable(rows, col) {
         let row = document.createElement("tr");
 
         for (let j = 0; j < col; j++) {
-            let cell = document.createElement("td");
-            cell.textContent = Math.floor(Math.random() * MAX_RANDOM) + MIN_RANDOM;
-            row.appendChild(cell);
+            row.appendChild(createTableCell());
         }
 
         table.appendChild(row);
     }
 
-    document.body.appendChild(table);
+    return table;
 }
 
+// Функція для створення комірки таблиці
+function createTableCell() {
+    let cell = document.createElement("td");
+    cell.textContent = Math.floor(Math.random() * MAX_RANDOM) + MIN_RANDOM;
+    return cell;
+}
+
+// Визначаємо розмір таблиці
 let m = Math.floor(Math.random() * MAX_TABLE_SIZE) + MIN_TABLE_SIZE;
 let n = Math.floor(Math.random() * MAX_TABLE_SIZE) + MIN_TABLE_SIZE;
 generateTable(m, n);
 
+// Функція для створення форми
 function generateForm() {
     let form = document.createElement("form");
     let fieldset = document.createElement("fieldset");
     form.appendChild(fieldset);
 
-    // Логін
-    fieldset.appendChild(createInputField("text", "Логін:"));
-    fieldset.appendChild(createInputField("text", "Пароль:"));
-    fieldset.appendChild(createInputField("text", "Повторіть пароль:"));
-
-    // Вибір статі
-    fieldset.appendChild(createRadioGroup("radio", ["Чоловічий", "Жіночий"], "Виберіть стать:"));
-
-    // Місто
-    fieldset.appendChild(createDropdown(CITIES, "Виберіть місто:", DEFAULT_SELECT_SIZE));
-
-    // Інтереси
-    fieldset.appendChild(createCheckboxGroup(INTERESTS, "Інтереси:"));
-
-    // Кнопки
-    let butDiv = document.createElement("div");
-    butDiv.classList.add("center");
-
-    ["Очистити", "Відправити"].forEach(buttonText => {
-        let but = document.createElement("input");
-        but.type = "button";
-        but.value = buttonText;
-        butDiv.appendChild(but);
-    });
-
-    fieldset.appendChild(butDiv);
+    addFormFields(fieldset);
     document.body.appendChild(form);
 }
 
+// Функція для додавання полів у форму
+function addFormFields(fieldset) {
+    fieldset.appendChild(createInputField("text", "Логін:"));
+    fieldset.appendChild(createInputField("text", "Пароль:"));
+    fieldset.appendChild(createInputField("text", "Повторіть пароль:"));
+    fieldset.appendChild(createRadioGroup("radio", ["Чоловічий", "Жіночий"], "Виберіть стать:"));
+    fieldset.appendChild(createDropdown(CITIES, "Виберіть місто:", DEFAULT_SELECT_SIZE));
+    fieldset.appendChild(createCheckboxGroup(INTERESTS, "Інтереси:"));
+    fieldset.appendChild(createButtonGroup(["Очистити", "Відправити"]));
+}
+
+// Функція для створення текстового поля
 function createInputField(type, labelText) {
     let div = document.createElement("div");
     div.classList.add("form-group");
@@ -81,6 +82,7 @@ function createInputField(type, labelText) {
     return div;
 }
 
+// Функція для створення групи радіокнопок
 function createRadioGroup(name, options, labelText) {
     let div = document.createElement("div");
 
@@ -89,19 +91,29 @@ function createRadioGroup(name, options, labelText) {
     div.appendChild(label);
 
     options.forEach(option => {
-        let input = document.createElement("input");
-        input.type = "radio";
-        input.name = name;
-        div.appendChild(input);
-
-        let label = document.createElement("label");
-        label.textContent = option;
-        div.appendChild(label);
+        div.appendChild(createRadioButton(name, option));
     });
 
     return div;
 }
 
+// Функція для створення окремої радіокнопки
+function createRadioButton(name, labelText) {
+    let input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+
+    let label = document.createElement("label");
+    label.textContent = labelText;
+
+    let container = document.createElement("span");
+    container.appendChild(input);
+    container.appendChild(label);
+
+    return container;
+}
+
+// Функція для створення випадаючого списку
 function createDropdown(options, labelText, size) {
     let div = document.createElement("div");
 
@@ -122,6 +134,7 @@ function createDropdown(options, labelText, size) {
     return div;
 }
 
+// Функція для створення групи чекбоксів
 function createCheckboxGroup(options, labelText) {
     let div = document.createElement("div");
     div.classList.add("form-group");
@@ -131,16 +144,46 @@ function createCheckboxGroup(options, labelText) {
     div.appendChild(label);
 
     options.forEach(option => {
-        let label = document.createElement("label");
-        label.textContent = ` ${option}`;
-        div.appendChild(label);
-
-        let input = document.createElement("input");
-        input.type = "checkbox";
-        div.appendChild(input);
+        div.appendChild(createCheckbox(option));
     });
 
     return div;
 }
 
+// Функція для створення окремого чекбоксу
+function createCheckbox(labelText) {
+    let label = document.createElement("label");
+    label.textContent = ` ${labelText}`;
+
+    let input = document.createElement("input");
+    input.type = "checkbox";
+
+    let container = document.createElement("span");
+    container.appendChild(input);
+    container.appendChild(label);
+
+    return container;
+}
+
+// Функція для створення групи кнопок
+function createButtonGroup(buttonTexts) {
+    let butDiv = document.createElement("div");
+    butDiv.classList.add("center");
+
+    buttonTexts.forEach(text => {
+        butDiv.appendChild(createButton(text));
+    });
+
+    return butDiv;
+}
+
+// Функція для створення кнопки
+function createButton(value) {
+    let but = document.createElement("input");
+    but.type = "button";
+    but.value = value;
+    return but;
+}
+
+// Викликаємо функцію для генерації форми
 generateForm();
