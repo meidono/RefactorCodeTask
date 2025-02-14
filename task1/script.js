@@ -1,205 +1,146 @@
+// Константи
+const MAX_RANDOM = 100;
+const MIN_RANDOM = 1;
+const MIN_TABLE_SIZE = 1;
+const MAX_TABLE_SIZE = 10;
+const DEFAULT_SELECT_SIZE = 3;
 
+// Дані
+const CITIES = ["Житомир", "Київ", "Львів"];
+const INTERESTS = ["Футбол", "Шахи", "Малювання", "Музика"];
 
 function generateTable(rows, col) {
-    
-    
     let table = document.createElement("table");
     table.classList.add("my-table");
-    
+
     for (let i = 0; i < rows; i++) {
-        let row = document.createElement("tr"); 
+        let row = document.createElement("tr");
 
         for (let j = 0; j < col; j++) {
-            let cell = document.createElement("td"); 
-            cell.textContent = Math.floor(Math.random() * 100) + 1; 
-            row.appendChild(cell); 
+            let cell = document.createElement("td");
+            cell.textContent = Math.floor(Math.random() * MAX_RANDOM) + MIN_RANDOM;
+            row.appendChild(cell);
         }
-        
-        table.appendChild(row); 
+
+        table.appendChild(row);
     }
 
-    document.body.appendChild(table); 
+    document.body.appendChild(table);
 }
 
-let m = Math.floor(Math.random() * 10) + 1;  
-let n = Math.floor(Math.random() * 10) + 1;  
+let m = Math.floor(Math.random() * MAX_TABLE_SIZE) + MIN_TABLE_SIZE;
+let n = Math.floor(Math.random() * MAX_TABLE_SIZE) + MIN_TABLE_SIZE;
 generateTable(m, n);
-
 
 function generateForm() {
     let form = document.createElement("form");
-
     let fieldset = document.createElement("fieldset");
     form.appendChild(fieldset);
 
     // Логін
-    let divLogin = document.createElement("div");
-    divLogin.classList.add("form-group");
+    fieldset.appendChild(createInputField("text", "Логін:"));
+    fieldset.appendChild(createInputField("text", "Пароль:"));
+    fieldset.appendChild(createInputField("text", "Повторіть пароль:"));
 
-    let labelLogin = document.createElement("label");
-    labelLogin.textContent = "Логін: ";
-    divLogin.appendChild(labelLogin);
+    // Вибір статі
+    fieldset.appendChild(createRadioGroup("radio", ["Чоловічий", "Жіночий"], "Виберіть стать:"));
 
-    let textLogin = document.createElement("input");
-    textLogin.type = "text";
-    divLogin.appendChild(textLogin);
+    // Місто
+    fieldset.appendChild(createDropdown(CITIES, "Виберіть місто:", DEFAULT_SELECT_SIZE));
 
-    // Пароль
-    let divPassword = document.createElement("div");
-    divPassword.classList.add("form-group");
+    // Інтереси
+    fieldset.appendChild(createCheckboxGroup(INTERESTS, "Інтереси:"));
 
-    let labelPassword = document.createElement("label");
-    labelPassword.textContent = "Пароль:";
-    divPassword.appendChild(labelPassword);
-
-    let textPassword = document.createElement("input");
-    textPassword.type = "text";
-    divPassword.appendChild(textPassword);
-
-
-    // Повторити пароль
-
-    let divPassRep = document.createElement("div");
-    divPassRep.classList.add("form-group");
-
-    let labelRepPassword = document.createElement("label");
-    labelRepPassword.textContent = "Повторіть Пароль:";
-    divPassRep.appendChild(labelRepPassword);
-
-    let textRepPassword = document.createElement("input");
-    textRepPassword.type = "text";
-    divPassRep.appendChild(textRepPassword);
-
-
-    //вибір статі
-
-
-    let divRadio = document.createElement("div");
-
-
-    let labelRadio = document.createElement("label");
-    labelRadio.textContent = "Виберіть стать:";
-
-    divRadio.appendChild(labelRadio);
-
-
-    let radioMan = document.createElement("input");
-    radioMan.type = "radio";
-    radioMan.name = "radio";
-    divRadio.appendChild(radioMan);
-    let labelRadioMan = document.createElement("label");
-    labelRadioMan.textContent = "чоловічий";
-    divRadio.appendChild(labelRadioMan);
-
-
-
-    let radioWoman = document.createElement("input");
-    radioWoman.type = "radio";
-    radioWoman.name = "radio";
-    divRadio.appendChild(radioWoman);
-    let labelRadioWoman = document.createElement("label");
-    labelRadioWoman.textContent = "жіночий";
-    divRadio.appendChild(labelRadioWoman);
-
-    //Місто
-
-    let divCity = document.createElement("div");
-    divCity.classList.add("left");
-
-    let cityLabel = document.createElement("label");
-    cityLabel.textContent = "виберіть місто:";
-    divCity.appendChild(cityLabel);
-
-    let city = document.createElement("select");
-    city.size = 3;
-
-    let option1 = document.createElement("option");
-    option1.text = "Житомир";
-
-    let option2 = document.createElement("option");
-    option2.text = "Київ";
-
-    let option3 = document.createElement("option");
-    option3.text = "Львів";
-
-    city.appendChild(option1);
-    city.appendChild(option2);
-    city.appendChild(option3);
-
-
-    divCity.appendChild(city);
-
-    //інтереси
-
-    let intDiv = document.createElement("div");
-    intDiv.classList.add("form-group");
-
-    let intLabel = document.createElement("label");
-    intLabel.textContent = "інтереси: ";
-    intDiv.appendChild(intLabel);
-
-
-    intLabel = document.createElement("label");
-    intLabel.textContent= " футбол"
-    intDiv.appendChild(intLabel);
-
-    intInput1 = document.createElement("input");
-    intInput1.type = "checkbox";
-    intDiv.appendChild(intInput1);
-
-    intLabel = document.createElement("label");
-    intLabel.textContent= "шахи"
-    intDiv.appendChild(intLabel);
-
-    intInput1 = document.createElement("input");
-    intInput1.type = "checkbox";
-    intDiv.appendChild(intInput1);
-
-    intLabel = document.createElement("label");
-    intLabel.textContent= "малювання"
-    intDiv.appendChild(intLabel);
-    
-
-    intInput1 = document.createElement("input");
-    intInput1.type = "checkbox";
-    intDiv.appendChild(intInput1);
-
-    intLabel = document.createElement("label");
-    intLabel.textContent= "музика"
-    intDiv.appendChild(intLabel);
-
-    intInput1 = document.createElement("input");
-    intInput1.type = "checkbox";
-    intDiv.appendChild(intInput1);
-    
-    
-    
-
-
+    // Кнопки
     let butDiv = document.createElement("div");
-    butDiv.classList.add("center")
-    let but= document.createElement("input");
-    but.type= "button";
-    but.value="Очистити";
-    butDiv.appendChild(but);
-     
-     but= document.createElement("input");
-    but.type= "button";
-    but.value="Відправити";
-    butDiv.appendChild(but);
+    butDiv.classList.add("center");
 
-    fieldset.appendChild(divLogin);
-    fieldset.appendChild(divPassword);
-    fieldset.appendChild(divPassRep);
-    fieldset.appendChild(divRadio);
-    fieldset.appendChild(divCity);
-    fieldset.appendChild(intDiv);
+    ["Очистити", "Відправити"].forEach(buttonText => {
+        let but = document.createElement("input");
+        but.type = "button";
+        but.value = buttonText;
+        butDiv.appendChild(but);
+    });
+
     fieldset.appendChild(butDiv);
     document.body.appendChild(form);
 }
 
-generateForm();
+function createInputField(type, labelText) {
+    let div = document.createElement("div");
+    div.classList.add("form-group");
 
-function generatelabel(){
+    let label = document.createElement("label");
+    label.textContent = labelText;
+    div.appendChild(label);
 
+    let input = document.createElement("input");
+    input.type = type;
+    div.appendChild(input);
+
+    return div;
 }
+
+function createRadioGroup(name, options, labelText) {
+    let div = document.createElement("div");
+
+    let label = document.createElement("label");
+    label.textContent = labelText;
+    div.appendChild(label);
+
+    options.forEach(option => {
+        let input = document.createElement("input");
+        input.type = "radio";
+        input.name = name;
+        div.appendChild(input);
+
+        let label = document.createElement("label");
+        label.textContent = option;
+        div.appendChild(label);
+    });
+
+    return div;
+}
+
+function createDropdown(options, labelText, size) {
+    let div = document.createElement("div");
+
+    let label = document.createElement("label");
+    label.textContent = labelText;
+    div.appendChild(label);
+
+    let select = document.createElement("select");
+    select.size = size;
+
+    options.forEach(optionText => {
+        let option = document.createElement("option");
+        option.text = optionText;
+        select.appendChild(option);
+    });
+
+    div.appendChild(select);
+    return div;
+}
+
+function createCheckboxGroup(options, labelText) {
+    let div = document.createElement("div");
+    div.classList.add("form-group");
+
+    let label = document.createElement("label");
+    label.textContent = labelText;
+    div.appendChild(label);
+
+    options.forEach(option => {
+        let label = document.createElement("label");
+        label.textContent = ` ${option}`;
+        div.appendChild(label);
+
+        let input = document.createElement("input");
+        input.type = "checkbox";
+        div.appendChild(input);
+    });
+
+    return div;
+}
+
+generateForm();
